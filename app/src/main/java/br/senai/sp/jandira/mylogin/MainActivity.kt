@@ -36,7 +36,8 @@ fun Login() {
         modifier = Modifier.fillMaxSize(),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
@@ -51,12 +52,12 @@ fun Login() {
 
                 }
             }
-            Spacer(modifier = Modifier.height(120.dp))
+            Spacer(modifier = Modifier.height(110.dp))
 
             //Form
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(17.dp)
             ) {
                 Text(
@@ -120,11 +121,25 @@ fun Login() {
                             contentDescription = ""
                         )
                     }
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Text(text = "Don't have an account? Sign up")
                 }
+                Spacer(modifier = Modifier.height(31.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Row() {
+                        Text(text = "Don't have an account?")
+                        Row() {
+                            Text(
+                                text = " Sign up",
+                                color = Color(207, 6, 240)
+                            )
+                        }
+                    }
+                }
+
             }
-            Spacer(modifier = Modifier.height(100.dp))
+            //Spacer(modifier = Modifier.height(140.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
             ) {
@@ -137,8 +152,6 @@ fun Login() {
                 ) {
 
                 }
-
-
             }
 
         }
