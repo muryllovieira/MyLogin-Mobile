@@ -89,7 +89,7 @@ fun Login() {
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    label = { Text(text = "Password")},
+                    label = { Text(text = "Password") },
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_https_24),
@@ -106,17 +106,45 @@ fun Login() {
                     Button(
                         onClick = { /*TODO*/ },
                         shape = RoundedCornerShape(16.dp),
-                        modifier = Modifier.height(48.dp).width(134.dp),
+                        modifier = Modifier
+                            .height(48.dp)
+                            .width(134.dp),
                         colors = ButtonDefaults.buttonColors(Color(207, 6, 240))
                     ) {
                         Text(text = "SIGN IN", color = Color.White)
+                        Icon(
+                            painter = painterResource(
+                                id = R.drawable.baseline_arrow_forward_24
+                            ),
+                            tint = Color.White,
+                            contentDescription = ""
+                        )
                     }
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Text(text = "Don't have an account? Sign up")
                 }
+            }
+            Spacer(modifier = Modifier.height(100.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
+            ) {
+                Surface(
+                    modifier = Modifier
+                        .width(140.dp)
+                        .height(50.dp),
+                    color = Color.Magenta,
+                    shape = RoundedCornerShape(0.dp, 15.dp, 0.dp, 0.dp)
+                ) {
+
+                }
+
 
             }
 
         }
-
     }
-
 }
+
+
+
+
