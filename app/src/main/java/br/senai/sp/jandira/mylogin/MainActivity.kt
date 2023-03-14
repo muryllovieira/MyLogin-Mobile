@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,8 +45,8 @@ fun Login() {
             ) {
                 Surface(
                     modifier = Modifier
-                        .width(140.dp)
-                        .height(50.dp),
+                        .width(120.dp)
+                        .height(40.dp),
                     color = Color.Magenta,
                     shape = RoundedCornerShape(0.dp, 0.dp, 0.dp, 15.dp)
                 ) {
@@ -61,13 +62,13 @@ fun Login() {
                     .padding(17.dp)
             ) {
                 Text(
-                    text = "Login",
+                    text = stringResource(id = R.string.title_login),
                     fontSize = 48.sp,
                     color = Color.Magenta,
                     fontWeight = FontWeight(700)
                 )
                 Text(
-                    text = "Please sign in to continue.", fontSize = 14.sp, color = Color.Gray
+                    text = stringResource(id = R.string.subtitle_login), fontSize = 14.sp, color = Color.Gray
                 )
                 Spacer(modifier = Modifier.height(87.dp))
                 OutlinedTextField(
@@ -75,7 +76,7 @@ fun Login() {
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    label = { Text(text = "Email") },
+                    label = { Text(text = stringResource(id = R.string.email)) },
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_email_24),
@@ -90,7 +91,7 @@ fun Login() {
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    label = { Text(text = "Password") },
+                    label = { Text(text = stringResource(id = R.string.password)) },
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_https_24),
@@ -112,7 +113,7 @@ fun Login() {
                             .width(134.dp),
                         colors = ButtonDefaults.buttonColors(Color(207, 6, 240))
                     ) {
-                        Text(text = "SIGN IN", color = Color.White)
+                        Text(text = stringResource(id = R.string.sign_in).uppercase(), color = Color.White)
                         Icon(
                             painter = painterResource(
                                 id = R.drawable.baseline_arrow_forward_24
@@ -128,10 +129,12 @@ fun Login() {
                     horizontalAlignment = Alignment.End
                 ) {
                     Row() {
-                        Text(text = "Don't have an account?")
-                        Row() {
+                        Text(text = stringResource(id = R.string.have_account))
+                        Row(
+                            modifier = Modifier.padding(start = 3.dp)
+                        ) {
                             Text(
-                                text = " Sign up",
+                                text = stringResource(id = R.string.sign_up),
                                 color = Color(207, 6, 240)
                             )
                         }
@@ -145,8 +148,8 @@ fun Login() {
             ) {
                 Surface(
                     modifier = Modifier
-                        .width(140.dp)
-                        .height(50.dp),
+                        .width(120.dp)
+                        .height(40.dp),
                     color = Color.Magenta,
                     shape = RoundedCornerShape(0.dp, 15.dp, 0.dp, 0.dp)
                 ) {
