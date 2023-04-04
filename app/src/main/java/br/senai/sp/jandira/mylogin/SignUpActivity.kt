@@ -3,19 +3,31 @@ package br.senai.sp.jandira.mylogin
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.mylogin.components.BottomShape
+import br.senai.sp.jandira.mylogin.components.TopShape
 import br.senai.sp.jandira.mylogin.ui.theme.MyLoginTheme
 
 class SignUpActivity : ComponentActivity() {
@@ -36,21 +48,12 @@ fun SignUp() {
         modifier = Modifier.fillMaxSize(),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
             ) {
-                Surface(
-                    modifier = Modifier
-                        .width(120.dp)
-                        .height(40.dp),
-                    color = Color.Magenta,
-                    shape = RoundedCornerShape(0.dp, 0.dp, 0.dp, 15.dp)
-                ) {
-
-                }
+                TopShape()
             }
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -64,15 +67,46 @@ fun SignUp() {
                 Text(
                     text = stringResource(id = R.string.sign_up),
                     fontSize = 32.sp,
-                    color = Color.Magenta,
+                    color = Color(207, 6, 240),
                     fontWeight = FontWeight(700)
                 )
                 Text(
-                    text = stringResource(id = R.string.create_new), fontSize = 14.sp, color = Color.Gray
+                    text = stringResource(id = R.string.create_new),
+                    fontSize = 14.sp,
+                    color = Color.Gray
                 )
-                Spacer(modifier = Modifier.height(31.dp))
-                OutlinedTextField(
-                    value = "Susanna Hoffs",
+                Spacer(modifier = Modifier.height(10.dp))
+                Box(
+                    modifier = Modifier.size(100.dp)
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .align(alignment = Alignment.TopEnd),
+                        shape = CircleShape,
+                        border = BorderStroke(
+                            width = 1.dp,
+                            Brush.horizontalGradient(
+                                colors = listOf(Color(207, 6, 240), Color.White)
+                            )
+                        )
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.baseline_person_24),
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            colorFilter = ColorFilter.tint(color = Color(207, 6, 240))
+                        )
+                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.photo_camera),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(alignment = Alignment.BottomEnd)
+                        )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                OutlinedTextField(value = "Susanna Hoffs",
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
@@ -83,11 +117,9 @@ fun SignUp() {
                             contentDescription = "",
                             tint = Color(207, 6, 240)
                         )
-                    }
-                )
+                    })
                 Spacer(modifier = Modifier.height(31.dp))
-                OutlinedTextField(
-                    value = "99999-9999",
+                OutlinedTextField(value = "99999-9999",
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
@@ -98,11 +130,9 @@ fun SignUp() {
                             contentDescription = "",
                             tint = Color(207, 6, 240)
                         )
-                    }
-                )
+                    })
                 Spacer(modifier = Modifier.height(31.dp))
-                OutlinedTextField(
-                    value = "TESTE@GMAIL.COM",
+                OutlinedTextField(value = "TESTE@GMAIL.COM",
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
@@ -113,11 +143,9 @@ fun SignUp() {
                             contentDescription = "",
                             tint = Color(207, 6, 240)
                         )
-                    }
-                )
+                    })
                 Spacer(modifier = Modifier.height(31.dp))
-                OutlinedTextField(
-                    value = "*********",
+                OutlinedTextField(value = "*********",
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
@@ -128,12 +156,10 @@ fun SignUp() {
                             contentDescription = "",
                             tint = Color(207, 6, 240)
                         )
-                    }
-                )
+                    })
                 Spacer(modifier = Modifier.height(21.dp))
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.Start
+                    modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start
                 ) {
                     Row() {
                         Checkbox(checked = false, onCheckedChange = {})
@@ -145,9 +171,8 @@ fun SignUp() {
                 }
                 Spacer(modifier = Modifier.height(31.dp))
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.End
-                ) { 
+                    modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End
+                ) {
                     Button(
                         onClick = { /*TODO*/ },
                         shape = RoundedCornerShape(16.dp),
@@ -156,13 +181,15 @@ fun SignUp() {
                             .height(48.dp),
                         colors = ButtonDefaults.buttonColors(Color(207, 6, 240))
                     ) {
-                        Text(text = stringResource(id = R.string.create_account).uppercase(), color = Color.White)
+                        Text(
+                            text = stringResource(id = R.string.create_account).uppercase(),
+                            color = Color.White
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(31.dp))
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.End
+                    modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End
                 ) {
                     Row() {
                         Text(text = stringResource(id = R.string.already_have_account))
@@ -181,15 +208,7 @@ fun SignUp() {
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
             ) {
-                Surface(
-                    modifier = Modifier
-                        .width(120.dp)
-                        .height(40.dp),
-                    color = Color.Magenta,
-                    shape = RoundedCornerShape(0.dp, 15.dp, 0.dp, 0.dp)
-                ) {
-
-                }
+                BottomShape()
             }
 
         }

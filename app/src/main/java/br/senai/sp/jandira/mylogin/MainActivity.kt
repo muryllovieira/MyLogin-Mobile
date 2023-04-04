@@ -17,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.mylogin.components.BottomShape
+import br.senai.sp.jandira.mylogin.components.TopShape
 import br.senai.sp.jandira.mylogin.ui.theme.MyLoginTheme
 
 class MainActivity : ComponentActivity() {
@@ -43,15 +45,7 @@ fun Login() {
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
             ) {
-                Surface(
-                    modifier = Modifier
-                        .width(120.dp)
-                        .height(40.dp),
-                    color = Color.Magenta,
-                    shape = RoundedCornerShape(0.dp, 0.dp, 0.dp, 15.dp)
-                ) {
-
-                }
+                TopShape()
             }
             Spacer(modifier = Modifier.height(110.dp))
 
@@ -146,15 +140,7 @@ fun Login() {
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
             ) {
-                Surface(
-                    modifier = Modifier
-                        .width(120.dp)
-                        .height(40.dp),
-                    color = Color.Magenta,
-                    shape = RoundedCornerShape(0.dp, 15.dp, 0.dp, 0.dp)
-                ) {
-
-                }
+                BottomShape()
             }
 
         }
