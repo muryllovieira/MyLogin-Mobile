@@ -1,33 +1,42 @@
 package br.senai.sp.jandira.mylogin
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.mylogin.components.BottomShape
 import br.senai.sp.jandira.mylogin.components.TopShape
+import br.senai.sp.jandira.mylogin.model.User
+import br.senai.sp.jandira.mylogin.repository.UserRepository
 import br.senai.sp.jandira.mylogin.ui.theme.MyLoginTheme
 
 class SignUpActivity : ComponentActivity() {
@@ -44,6 +53,29 @@ class SignUpActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun SignUp() {
+
+    var userNameState by remember {
+        mutableStateOf("")
+    }
+
+    var phoneState by remember {
+        mutableStateOf("")
+    }
+
+    var emailState by remember {
+        mutableStateOf("")
+    }
+
+    var passwordState by remember {
+        mutableStateOf("")
+    }
+
+    var over18State by remember {
+        mutableStateOf(false)
+    }
+
+    var context = LocalContext.current
+
     Surface(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -60,8 +92,10 @@ fun SignUp() {
             //Form
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(17.dp),
+                    .fillMaxSize()
+                    .padding(start = 17.dp, end = 17.dp)
+                    .verticalScroll(rememberScrollState())
+                    .weight(weight = 1f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -103,11 +137,11 @@ fun SignUp() {
                         contentDescription = null,
                         modifier = Modifier
                             .align(alignment = Alignment.BottomEnd)
-                        )
+                    )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                OutlinedTextField(value = "Susanna Hoffs",
-                    onValueChange = {},
+                OutlinedTextField(value = userNameState,
+                    onValueChange = { userNameState = it },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
                     label = { Text(text = stringResource(id = R.string.username)) },
@@ -119,10 +153,11 @@ fun SignUp() {
                         )
                     })
                 Spacer(modifier = Modifier.height(31.dp))
-                OutlinedTextField(value = "99999-9999",
-                    onValueChange = {},
+                OutlinedTextField(value = phoneState,
+                    onValueChange = { phoneState = it },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     label = { Text(text = stringResource(id = R.string.phone)) },
                     leadingIcon = {
                         Icon(
@@ -132,10 +167,11 @@ fun SignUp() {
                         )
                     })
                 Spacer(modifier = Modifier.height(31.dp))
-                OutlinedTextField(value = "TESTE@GMAIL.COM",
-                    onValueChange = {},
+                OutlinedTextField(value = emailState,
+                    onValueChange = { emailState = it },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     label = { Text(text = stringResource(id = R.string.email)) },
                     leadingIcon = {
                         Icon(
@@ -145,10 +181,11 @@ fun SignUp() {
                         )
                     })
                 Spacer(modifier = Modifier.height(31.dp))
-                OutlinedTextField(value = "*********",
-                    onValueChange = {},
+                OutlinedTextField(value = passwordState,
+                    onValueChange = { passwordState = it },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
+                    visualTransformation = PasswordVisualTransformation(),
                     label = { Text(text = stringResource(id = R.string.password)) },
                     leadingIcon = {
                         Icon(
@@ -162,7 +199,7 @@ fun SignUp() {
                     modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start
                 ) {
                     Row() {
-                        Checkbox(checked = false, onCheckedChange = {})
+                        Checkbox(checked = over18State, onCheckedChange = { over18State = it })
                         Row(Modifier.padding(top = 14.dp)) {
                             Text(stringResource(id = R.string.over_18))
                         }
@@ -174,7 +211,16 @@ fun SignUp() {
                     modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End
                 ) {
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            userSave(
+                                context,
+                                emailState,
+                                userNameState,
+                                phoneState,
+                                passwordState,
+                                over18State
+                            )
+                        },
                         shape = RoundedCornerShape(16.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -212,5 +258,43 @@ fun SignUp() {
             }
 
         }
+    }
+}
+
+fun userSave(
+    context: Context,
+    email: String,
+    userName: String,
+    phone: String,
+    password: String,
+    isOver: Boolean
+) {
+    val userRepository = UserRepository(context)
+
+    //Recuperando no banco um usuario que tenha o email informado
+    var user = userRepository.findUserByEmail(email)
+
+    // Se user for null, gravamos o novo usuario
+    // senão avisamos que o usuario já existe.
+    if (user == null) {
+        val newUser = User(
+            userName = userName,
+            phone = phone,
+            email = email,
+            password = password,
+            isOver18 = isOver
+        )
+        val id = userRepository.save(newUser)
+        Toast.makeText(
+            context,
+            "User created #$id",
+            Toast.LENGTH_LONG
+        ).show()
+    } else {
+        Toast.makeText(
+            context,
+            "User already exists!!",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

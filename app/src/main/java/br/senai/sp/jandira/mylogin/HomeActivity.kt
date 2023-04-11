@@ -126,75 +126,15 @@ fun Home() {
                                     modifier = Modifier
                                         .padding(start = 19.dp)
                                 ) {
-                                    items(products) { product ->
-                                        Card(
-                                            modifier = Modifier
-                                                .width(109.dp) //width 125 e height 75 modificados para se adequar a tela(tamanho não está igual do figma)
-                                                .height(64.dp),
-                                            backgroundColor = colorResource(id = R.color.pink_login)
 
-                                        ) {
-                                            Column(
-                                                modifier = Modifier.fillMaxSize().padding(8.dp),
-                                                verticalArrangement = Arrangement.Center,
-                                                horizontalAlignment = Alignment.CenterHorizontally
-                                            ) {
-                                                Icon(
-                                                    painter = product.image ?: painterResource(
-                                                        id = R.drawable.baseline_lock_24
-                                                    ),
-                                                    contentDescription = "",
-                                                    modifier = Modifier
-                                                        .width(32.dp)
-                                                        .height(32.dp),
-                                                    tint = Color.White
-                                                )
-                                                Text(
-                                                    text = product.name,
-                                                    color = Color.White,
-                                                    fontSize = 14.sp
-                                                )
-                                            }
-                                        }
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                    }
                                 }
 
                             }
                         }
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            OutlinedTextField(
-                                value = "",
-                                onValueChange = {},
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 17.dp
-                                    ),
-                                shape = RoundedCornerShape(16.dp),
-                                label = {
-                                    Text(text = "Search your destinity")
-                                },
-                                leadingIcon = {
-                                    Icon(
-                                        painter = painterResource(
-                                            id = R.drawable.baseline_search_24
-                                        ),
-                                        contentDescription = "",
-                                        tint = Color.Gray
-                                    )
-                                }
 
-
-                            )
                         }
+                    }
+                }
             }
         }
     }
-}
