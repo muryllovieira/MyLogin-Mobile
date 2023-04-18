@@ -1,11 +1,14 @@
 package br.senai.sp.jandira.mylogin
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
@@ -24,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,6 +42,8 @@ import br.senai.sp.jandira.mylogin.components.TopShape
 import br.senai.sp.jandira.mylogin.model.User
 import br.senai.sp.jandira.mylogin.repository.UserRepository
 import br.senai.sp.jandira.mylogin.ui.theme.MyLoginTheme
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +81,23 @@ fun SignUp() {
     }
 
     var context = LocalContext.current
+
+    // Obter foto da galeria de imagens
+    var photoUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+    // Criar o objeto que abrirá a galeria e retornará
+    // a Uri da imagem selecionada
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) {
+        photoUri = it
+    }
+
+    var painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current).data(photoUri).build()
+    )
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -126,10 +149,11 @@ fun SignUp() {
                         )
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.baseline_person_24),
+                            painter = painter,
                             contentDescription = null,
                             modifier = Modifier.size(16.dp),
-                            colorFilter = ColorFilter.tint(color = Color(207, 6, 240))
+                            contentScale = ContentScale.Crop
+
                         )
                     }
                     Image(
@@ -137,6 +161,9 @@ fun SignUp() {
                         contentDescription = null,
                         modifier = Modifier
                             .align(alignment = Alignment.BottomEnd)
+                            .clickable {
+                                launcher.launch("image/*")
+                            }
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
