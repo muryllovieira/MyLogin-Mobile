@@ -16,4 +16,8 @@
     <string name="already_have_account">Already have an account?</string>
     <string name="sign_in">Sign in</string>
     <string name="title_activity_home">HomeActivity</string>
+
+    <string name="categories">Categories:</string>
+
+
 </resources>
